@@ -6,17 +6,18 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   # Here we generate random passwords (thank you pwgen!). The first two are for mysql users, the last batch for random keys in wp-config.php
   WORDPRESS_DB="logs_business_rabodirect_com_au"
   MYSQL_PASSWORD=`pwgen -c -n -1 12`
+  WORDPRESS_USER="media_rb_user"
   WORDPRESS_PASSWORD=`pwgen -c -n -1 12`
-  WORDPRESS_TABLE_PREFIX = "rb_"
+  WORDPRESS_TABLE_PREFIX="rb_"
   #This is so the passwords show up in logs. 
   echo mysql root password: $MYSQL_PASSWORD
   echo wordpress password: $WORDPRESS_PASSWORD
   echo $MYSQL_PASSWORD > /mysql-root-pw.txt
   echo $WORDPRESS_PASSWORD > /wordpress-db-pw.txt
-  echo $WORDPRESS_TABLE_PREFIX
+ 
 
   sed -e "s/database_name_here/$WORDPRESS_DB/
-  s/username_here/$WORDPRESS_DB/
+  s/username_here/$WORDPRESS_USER/
   s/password_here/$WORDPRESS_PASSWORD/
   s/wp_/$WORDPRESS_TABLE_PREFIX/
   /'AUTH_KEY'/s/put your unique phrase here/`pwgen -c -n -1 65`/
