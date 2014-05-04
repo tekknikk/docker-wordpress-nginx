@@ -48,7 +48,7 @@ RUN chown -R www-data:www-data /usr/share/nginx/www
 
 
 # Wordpress Initialization and Startup Script
-ADD ./db/media_rabodirect_com_au_2014-05-04.sql /tmp/media_rabodirect_com_au_2014-05-04.sql
+ADD ./db/media_rabodirect_com_au.sql /tmp/media_rabodirect_com_au.sql
 ADD ./start.sh /start.sh
 RUN chmod 755 /start.sh
 

@@ -4,7 +4,7 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   /usr/bin/mysqld_safe & 
   sleep 10s
   # Here we generate random passwords (thank you pwgen!). The first two are for mysql users, the last batch for random keys in wp-config.php
-  WORDPRESS_DB="logs_business_rabodirect_com_au"
+  WORDPRESS_DB="media_rb"
   MYSQL_PASSWORD=`pwgen -c -n -1 12`
   WORDPRESS_USER="media_rb_user"
   WORDPRESS_PASSWORD=`pwgen -c -n -1 12`
@@ -52,8 +52,8 @@ ENDL
   chown www-data:www-data /usr/share/nginx/www/wp-config.php
 
   mysqladmin -u root password $MYSQL_PASSWORD 
-  mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE logs_business_rabodirect_com_au; GRANT ALL PRIVILEGES ON logs_business_rabodirect_com_au.* TO 'logs_business_rabodirect_com_au'@'localhost' IDENTIFIED BY '$WORDPRESS_PASSWORD'; FLUSH PRIVILEGES;"
-  mysqlimport -uroot -p$MYSQL_PASSWORD logs_business_rabodirect_com_au /usr/share/nginx/media_rabodirect_com_au_2014-05-04.sql
+  mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE media_rb; GRANT ALL PRIVILEGES ON media_rb.* TO 'media_rb_user'@'localhost' IDENTIFIED BY '$WORDPRESS_PASSWORD'; FLUSH PRIVILEGES;"
+  mysqlimport -uroot -p$MYSQL_PASSWORD logs_business_rabodirect_com_au /usr/share/nginx/media_rabodirect_com_au.sql
   killall mysqld
 fi
 
