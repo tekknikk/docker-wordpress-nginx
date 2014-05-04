@@ -4,18 +4,21 @@ if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   /usr/bin/mysqld_safe & 
   sleep 10s
   # Here we generate random passwords (thank you pwgen!). The first two are for mysql users, the last batch for random keys in wp-config.php
-  WORDPRESS_DB="wordpress"
+  WORDPRESS_DB="logs_business_rabodirect_com_au"
   MYSQL_PASSWORD=`pwgen -c -n -1 12`
   WORDPRESS_PASSWORD=`pwgen -c -n -1 12`
+  WORDPRESS_TABLE_PREFIX = "rb_"
   #This is so the passwords show up in logs. 
   echo mysql root password: $MYSQL_PASSWORD
   echo wordpress password: $WORDPRESS_PASSWORD
   echo $MYSQL_PASSWORD > /mysql-root-pw.txt
   echo $WORDPRESS_PASSWORD > /wordpress-db-pw.txt
+  echo $WORDPRESS_TABLE_PREFIX
 
   sed -e "s/database_name_here/$WORDPRESS_DB/
   s/username_here/$WORDPRESS_DB/
   s/password_here/$WORDPRESS_PASSWORD/
+  s/wp_/$WORDPRESS_TABLE_PREFIX/
   /'AUTH_KEY'/s/put your unique phrase here/`pwgen -c -n -1 65`/
   /'SECURE_AUTH_KEY'/s/put your unique phrase here/`pwgen -c -n -1 65`/
   /'LOGGED_IN_KEY'/s/put your unique phrase here/`pwgen -c -n -1 65`/
@@ -48,7 +51,8 @@ ENDL
   chown www-data:www-data /usr/share/nginx/www/wp-config.php
 
   mysqladmin -u root password $MYSQL_PASSWORD 
-  mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE wordpress; GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY '$WORDPRESS_PASSWORD'; FLUSH PRIVILEGES;"
+  mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE logs_business_rabodirect_com_au; GRANT ALL PRIVILEGES ON logs_business_rabodirect_com_au.* TO 'logs_business_rabodirect_com_au'@'localhost' IDENTIFIED BY '$WORDPRESS_PASSWORD'; FLUSH PRIVILEGES;"
+  mysqlimport -uroot -p$MYSQL_PASSWORD logs_business_rabodirect_com_au /usr/share/nginx/media_rabodirect_com_au_2014-05-04.sql
   killall mysqld
 fi
 
