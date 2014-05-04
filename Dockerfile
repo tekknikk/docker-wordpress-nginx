@@ -44,7 +44,6 @@ ADD ./supervisord.conf /etc/supervisord.conf
 # Install Wordpress
 RUN rm -rf /usr/share/nginx/www
 RUN git clone http://stash.business.rabodirect.com.au:7990/scm/rab/media-center.git /usr/share/nginx/www
-ADD ./wp-config.php /tmp/wp-config.php
 RUN chown -R www-data:www-data /usr/share/nginx/www
 
 
